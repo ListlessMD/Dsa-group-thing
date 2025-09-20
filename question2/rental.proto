@@ -1,0 +1,124 @@
+syntax = "proto3";
+
+package carrental;
+
+enum CarStatus {
+    AVAILABLE = 0;
+    UNAVAILABLE = 1;
+    RENTED = 2;
+}
+
+enum UserRole {
+    CUSTOMER = 0;
+    ADMIN = 1;
+}
+
+message Car {
+    string plate = 1;
+    string make = 2;
+    string model = 3;
+    int32 year = 4;
+    float daily_price = 5;
+    int32 mileage = 6;
+    CarStatus status = 7;
+}
+
+message User {
+    string username = 1;
+    string name = 2;
+    UserRole role = 3;
+}
+
+message CartItem {
+    string plate = 1;
+    string start_date = 2;
+    string end_date = 3;
+}
+
+message Reservation {
+    string username = 1;
+    repeated CartItem items = 2;
+    float total_price = 3;
+}
+
+message AddCarRequest {
+    Car car = 1;
+}
+
+message AddCarResponse {
+    string plate = 1;
+    string message = 2;
+}
+
+message CreateUsersRequest {
+    repeated User users = 1;
+}
+
+message CreateUsersResponse {
+    string message = 1;
+}
+
+message UpdateCarRequest {
+    string plate = 1;
+    Car updated_car = 2;
+}
+
+message UpdateCarResponse {
+    string message = 1;
+}
+
+message RemoveCarRequest {
+    string plate = 1;
+}
+
+message RemoveCarResponse {
+    repeated Car cars = 1;
+    string message = 2;
+}
+
+message ListAvailableCarsRequest {
+    string filter = 1;
+}
+
+message SearchCarRequest {
+    string plate = 1;
+}
+
+message SearchCarResponse {
+    Car car = 1;
+    bool available = 2;
+}
+
+message AddToCartRequest {
+    string username = 1;
+    string plate = 2;
+    string start_date = 3;
+    string end_date = 4;
+}
+
+message AddToCartResponse {
+    string message = 1;
+}
+
+message PlaceReservationRequest {
+    string username = 1;
+}
+
+message PlaceReservationResponse {
+    Reservation reservation = 1;
+    string message = 2;
+}
+
+
+
+
+service CarRental {
+    rpc AddCar(AddCarRequest) returns (AddCarResponse);
+    rpc CreateUsers(CreateUsersRequest) returns (CreateUsersResponse);
+    rpc UpdateCar(UpdateCarRequest) returns (UpdateCarResponse);
+    rpc RemoveCar(RemoveCarRequest) returns (RemoveCarResponse);
+    rpc ListAvailableCars(ListAvailableCarsRequest) returns (stream Car);
+    rpc SearchCar(SearchCarRequest) returns (SearchCarResponse);
+    rpc AddToCart(AddToCartRequest) returns (AddToCartResponse);
+    rpc PlaceReservation(PlaceReservationRequest) returns (PlaceReservationResponse);
+}
