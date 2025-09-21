@@ -52,7 +52,7 @@ time:Utc completedDate;
 |};
 
 
-final map<Assets> assetDB = {};
+final map<Assets> assetDB = {};00
 
 service /equipserve on new http:Listener(8080) {
 
@@ -306,11 +306,6 @@ resource function delete [string assetTag]/workorders/[string workOrderId]()
     }
    }
 
-
-
-
-
-    
 }
 
 
