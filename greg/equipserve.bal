@@ -52,7 +52,7 @@ time:Utc completedDate;
 |};
 
 
-final map<Assets> assetDB = {};00
+final map<Assets> assetDB = {};
 
 service /equipserve on new http:Listener(8080) {
 
